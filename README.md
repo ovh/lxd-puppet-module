@@ -14,7 +14,7 @@ Puppet LXD mangament module
 
 
 # Overview
-Manages the state of LXD on the host including basic LXD daemon configuration, containers, profiles, storage pools.
+This is a Puppet Module which manages the state of LXD on the host including basic LXD daemon configuration, containers, profiles, storage pools.
 
 # Module Description
 This module installs LXD and is able to manage container states as well as most of container related configuration.
@@ -27,7 +27,7 @@ This module adds the following resources defines to Puppet:
  
 # Requirements
 
-This module has been testes on:  
+This module has been tested on:
  * Ubuntu 14.04 with Puppet 3.7
  * Ubuntu 16.04 with Puppet 3.8
  * Ubuntu 18.04 with Puppet 5.4
