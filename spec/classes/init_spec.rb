@@ -26,6 +26,70 @@ describe 'lxd' do
                 it do
                     is_expected.to contain_class('lxd::config')
                 end
+
+                describe 'with package install' do
+                    let(:params) do
+                        super().merge(
+                            {
+                                'provider' => 'package',
+                            }
+                        )
+                    end
+                    it do
+                        is_expected.to contain_package('lxd').with(
+                            'ensure' => 'present',
+                            'install_options' => [],
+                        )
+                    end
+                    it { is_expected.not_to contain_exec('install snap core') }
+                    it { is_expected.not_to contain_exec('install lxd') }
+                end
+                describe 'with snap install' do
+                    let(:params) do
+                        super().merge(
+                            {
+                                'provider' => 'snap',
+                            }
+                        )
+                    end
+
+                    describe 'with manage_snapd => true' do
+                        let(:params) do
+                            super().merge({
+                                'manage_snapd' => true,
+                            })
+                        end
+                        it do
+                            is_expected.to contain_package('snapd').with_ensure('present')
+                        end
+                    end
+
+                    describe 'with manage_snapd => false' do
+                        let(:params) do
+                            super().merge({
+                                'manage_snapd' => false,
+                            })
+                        end
+                        it do
+                            is_expected.not_to contain_package('snapd')
+                        end
+                    end
+
+                    it do
+                        is_expected.to contain_exec('install snap core').with(
+                            'path' => '/usr/bin:/bin',
+                            'command' => '/usr/bin/snap install core',
+                            'unless' => '/usr/bin/snap list core',
+                        ).that_requires('Package[snapd]')
+                    end
+                    it do
+                        is_expected.to contain_exec('install lxd').with(
+                            'path' => '/usr/bin:/bin',
+                            'command' => '/usr/bin/snap install lxd',
+                            'unless' => '/usr/bin/snap list lxd',
+                        ).that_requires('Exec[install snap core]')
+                    end
+                end
             end
 
             describe 'with ensure => absent' do
@@ -69,9 +133,29 @@ describe 'lxd' do
                             }
                         )
                     end
-                    it do
-                        is_expected.to contain_package('snapd').with_ensure('absent')
+
+                    describe 'with manage_snapd => true' do
+                        let(:params) do
+                            super().merge({
+                                'manage_snapd' => true,
+                            })
+                        end
+                        it do
+                            is_expected.to contain_package('snapd').with_ensure('absent')
+                        end
                     end
+
+                    describe 'with manage_snapd => false' do
+                        let(:params) do
+                            super().merge({
+                                'manage_snapd' => false,
+                            })
+                        end
+                        it do
+                            is_expected.not_to contain_package('snapd')
+                        end
+                    end
+
                     it do
                         is_expected.to contain_exec('install snap core').with(
                             'path' => '/usr/bin:/bin',

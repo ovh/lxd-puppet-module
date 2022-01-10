@@ -21,4 +21,5 @@ class lxd::params {
     $lxd_core_trust_password = undef
     $lxd_core_trust_password_ensure = 'absent'
     $lxd_provider = 'package'
+    $manage_snapd = true
 }

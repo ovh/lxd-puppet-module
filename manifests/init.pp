@@ -22,6 +22,10 @@
 #   Manage LXD default trust password for clustering
 # @param lxd_core_trust_password
 #   LXD trust password for clusters
+# @param manage_snapd
+#   If class should manage install of `snapd`.
+#   There might be cases where the package is managed externally
+#   and would cause conflict.
 #
 class lxd(
     Optional[String]          $version                         = $lxd::params::version,
@@ -33,7 +37,8 @@ class lxd(
     Enum['present', 'absent'] $lxd_core_https_address_ensure   = $lxd::params::lxd_core_https_address_ensure,
     Optional[String]          $lxd_core_trust_password         = $lxd::params::lxd_core_trust_password,
     Enum['present', 'absent'] $lxd_core_trust_password_ensure  = $lxd::params::lxd_core_trust_password_ensure,
-    Enum['package', 'snap']   $provider                        = $lxd::params::lxd_provider
+    Enum['package', 'snap']   $provider                        = $lxd::params::lxd_provider,
+    Boolean                   $manage_snapd                    = $lxd::params::manage_snapd
 ) inherits lxd::params {
     contain lxd::install
     contain lxd::config

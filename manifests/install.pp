@@ -13,15 +13,17 @@ class lxd::install {
         install_options => $::lxd::install_options,
       }
     } else {
-      package { 'snapd':
-        ensure => $::lxd::ensure,
+      if $lxd::manage_snapd {
+        package { 'snapd':
+          ensure => $::lxd::ensure,
+          before => Exec['install snap core']
+        }
       }
 
       exec { 'install snap core':
         path    => '/usr/bin:/bin',
         command => '/usr/bin/snap install core',
         unless  => '/usr/bin/snap list core',
-        require => Package['snapd']
       }
 
       exec { 'install lxd':
