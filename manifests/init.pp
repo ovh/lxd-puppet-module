@@ -35,11 +35,16 @@ class lxd(
     Enum['present', 'absent'] $lxd_core_trust_password_ensure  = $lxd::params::lxd_core_trust_password_ensure,
     Enum['deb', 'snap']       $provider                        = $lxd::params::lxd_provider
 ) inherits lxd::params {
-    contain ::lxd::install
-    contain ::lxd::config
+    contain lxd::install
+    contain lxd::config
 
-    Class['lxd::install']
-    -> Class['lxd::config']
+    if $ensure == 'present' {
+      Class['lxd::install']
+      -> Class['lxd::config']
+    } else {
+      Class['lxd::config']
+      -> Class['lxd::install']
+    }
 
     # Every container has to be created after LXD is installed, of course
     # Container can have multiple profiles so better make sure that
