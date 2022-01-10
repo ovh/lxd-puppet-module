@@ -1,8 +1,11 @@
-## LXD default params
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 # Copyright 2020 The LXD Puppet module Authors. All rights reserved.
-
+#
+# @summary LXD default parameters
+#
+# @api private
+#
 class lxd::params {
     $ensure = present
     $version = undef

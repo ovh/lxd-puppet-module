@@ -1,19 +1,39 @@
-## Init class
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 # Copyright 2020 The LXD Puppet module Authors. All rights reserved.
-
+#
+# @summary Manage LXD and its configuration
+#
+# @param ensure
+#   Ensure the state of the resources
+# @param version
+#   Version to be installed
+# @param install_options
+#   Additional install options passed to apt eg. `-t trusty-backports`
+# @param lxd_auto_update_interval_ensure
+#   Manage Auto Update Interval
+# @param lxd_auto_update_interval
+#   Default interval to update remote images, 0 to disable
+# @param lxd_core_https_address_ensure
+#   Manage LXD Core HTTPS Address
+# @param lxd_core_https_address
+#   HTTPS address on which LXD to listen to
+# @param lxd_core_trust_password_ensure
+#   Manage LXD default trust password for clustering
+# @param lxd_core_trust_password
+#   LXD trust password for clusters
+#
 class lxd(
-    $version = $lxd::params::version,
-    $ensure  = $lxd::params::ensure,
-    $install_options = $lxd::params::install_options,
-    $lxd_auto_update_interval = $lxd::params::lxd_auto_update_interval,
-    $lxd_auto_update_interval_ensure = $lxd::params::lxd_auto_update_interval_ensure,
-    $lxd_core_https_address = $lxd::params::lxd_core_https_address,
-    $lxd_core_https_address_ensure = $lxd::params::lxd_core_https_address_ensure,
-    $lxd_core_trust_password = $lxd::params::lxd_core_trust_password,
-    $lxd_core_trust_password_ensure = $lxd::params::lxd_core_trust_password_ensure,
-    Enum['deb', 'snap'] $provider = $lxd::params::lxd_provider
+    Optional[String]          $version                         = $lxd::params::version,
+    Enum['present', 'absent'] $ensure                          = $lxd::params::ensure,
+    Array[String]             $install_options                 = $lxd::params::install_options,
+    Integer                   $lxd_auto_update_interval        = $lxd::params::lxd_auto_update_interval,
+    Enum['present', 'absent'] $lxd_auto_update_interval_ensure = $lxd::params::lxd_auto_update_interval_ensure,
+    Optional[String]          $lxd_core_https_address          = $lxd::params::lxd_core_https_address,
+    Enum['present', 'absent'] $lxd_core_https_address_ensure   = $lxd::params::lxd_core_https_address_ensure,
+    Optional[String]          $lxd_core_trust_password         = $lxd::params::lxd_core_trust_password,
+    Enum['present', 'absent'] $lxd_core_trust_password_ensure  = $lxd::params::lxd_core_trust_password_ensure,
+    Enum['deb', 'snap']       $provider                        = $lxd::params::lxd_provider
 ) inherits lxd::params {
     contain ::lxd::install
     contain ::lxd::config
