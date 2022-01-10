@@ -16,9 +16,7 @@
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "20.04",
-        "18.04",
-        "16.04",
-        "14.04"
+        "18.04"
       ]
     }
   ],
