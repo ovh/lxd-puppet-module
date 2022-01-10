@@ -26,11 +26,19 @@ class lxd::install {
         unless  => '/usr/bin/snap list core',
       }
 
-      exec { 'install lxd':
-        path    => '/usr/bin:/bin',
-        command => '/usr/bin/snap install lxd',
-        unless  => '/usr/bin/snap list lxd',
-        require => Exec['install snap core']
+      if $lxd::ensure == 'present' {
+        exec { 'install lxd':
+          path    => '/usr/bin:/bin',
+          command => '/usr/bin/snap install lxd',
+          unless  => '/usr/bin/snap list lxd',
+          require => Exec['install snap core']
+        }
+      } else {
+        exec { 'remove lxd':
+          path    => '/usr/bin:/bin',
+          command => '/usr/bin/snap remove lxd',
+          unless  => '! /usr/bin/snap list lxd >/dev/null 2>&1',
+        }
       }
     }
 }

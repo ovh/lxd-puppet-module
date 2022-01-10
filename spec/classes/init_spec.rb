@@ -164,11 +164,11 @@ describe 'lxd' do
                         ).that_requires('Package[snapd]')
                     end
                     it do
-                        is_expected.to contain_exec('install lxd').with(
+                        is_expected.to contain_exec('remove lxd').with(
                             'path' => '/usr/bin:/bin',
-                            'command' => '/usr/bin/snap install lxd',
-                            'unless' => '/usr/bin/snap list lxd',
-                        ).that_requires('Exec[install snap core]')
+                            'command' => '/usr/bin/snap remove lxd',
+                            'unless' => '! /usr/bin/snap list lxd >/dev/null 2>&1',
+                        )
                     end
                 end
             end
