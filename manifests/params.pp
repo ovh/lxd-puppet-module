@@ -20,5 +20,5 @@ class lxd::params {
     # setting the server's trust password
     $lxd_core_trust_password = undef
     $lxd_core_trust_password_ensure = 'absent'
-    $lxd_provider = 'deb'
+    $lxd_provider = 'package'
 }

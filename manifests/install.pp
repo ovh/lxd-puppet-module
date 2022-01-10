@@ -7,7 +7,7 @@
 # @api private
 #
 class lxd::install {
-    if $::lxd::provider == 'deb' {
+    if $::lxd::provider == 'package' {
       package { 'lxd':
         ensure          => $::lxd::ensure,
         install_options => $::lxd::install_options,

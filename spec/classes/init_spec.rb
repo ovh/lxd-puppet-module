@@ -48,7 +48,7 @@ describe 'lxd' do
                     let(:params) do
                         super().merge(
                             {
-                                'provider' => 'deb',
+                                'provider' => 'package',
                             }
                         )
                     end
