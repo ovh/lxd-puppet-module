@@ -1,17 +1,21 @@
 {
-  "name": "lxd-puppet-module",
+  "name": "lxd-lxd_puppet_module",
   "version": "1.0.0",
   "author": "Filip Dorosz",
-  "summary": "",
+  "summary": "Puppet module to manage LXD hosts",
   "license": "BSD-3-Clause",
-  "source": "",
+  "source": "https://github.com/ovh/lxd-puppet-module",
   "dependencies": [
-
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 6.0.0 < 6.6.0"
+    }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
+        "20.04",
         "18.04",
         "16.04",
         "14.04"
@@ -21,10 +25,10 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.10.0 < 7.0.0"
+      "version_requirement": ">= 5.4.0 < 7.0.0"
     }
   ],
-  "pdk-version": "1.18.0",
-  "template-url": "pdk-default#1.18.0",
-  "template-ref": "tags/1.18.0-0-g095317c"
+  "pdk-version": "2.2.0",
+  "template-url": "pdk-default#2.2.0",
+  "template-ref": "tags/2.2.0-0-g2381db6"
 }
