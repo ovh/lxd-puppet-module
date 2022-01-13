@@ -13,6 +13,8 @@ class lxd(
     $lxd_core_https_address_ensure = $lxd::params::lxd_core_https_address_ensure,
     $lxd_core_trust_password = $lxd::params::lxd_core_trust_password,
     $lxd_core_trust_password_ensure = $lxd::params::lxd_core_trust_password_ensure,
+    Enum['deb', 'snap'] $lxd_package_provider = $lxd::params::package_provider,
+    Boolean             $manage_snapd = $lxd::params::manage_snapd
 ) inherits lxd::params {
     contain ::lxd::install
     contain ::lxd::config
